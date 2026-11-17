@@ -124,7 +124,7 @@ check("乱数は sort の比較の中で引かない（ブラウザで引く回�
 { const inl = html.split("<script>").slice(1).map((x) => x.split("</" + "script>")[0]).join("\n"); // index.html の中の script も見る（nemuri-kotsu#1 で行の途中に // を入れて画面が動かなくなった）
   check("一行の式の途中にコメント // を足さない（行の残りが消える。rosen-hitofude 2026-11-04・nemuri-kotsu#1）", !/;\s*\/\/[^\n]*;\s*\w/.test((gen + "\n" + inl).split("\n").filter((l) => !l.trim().startsWith("//")).join("\n"))); }
 check("言い方：「必ず助かる」「絶対に安全」などと言い切らない", !/必ず助か|絶対に安全|絶対に大丈夫|必ずつながる|必ず解決/.test(html + gen + readme));
-{ const howto = (html.match(/<dialog id="howto"[\s\S]*?<\/dialog>/) || [""])[0], ab = (html.match(/function about\(\)[\s\S]*?\n}/) || [""])[0], dis = (t) => /出産/.test(t) && /200万円以上/.test(t) && /税の相談の代わりではありません/.test(t) && /国税庁/.test(t);
+{ const howto = (html.match(/<dialog id="howto"[\s\S]*?<\/dialog>/) || [""])[0], ab = (html.match(/function about\(\)[\s\S]*?\n}/) || [""])[0], dis = (t) => /出産・眼鏡・人間ドックのあとの治療・申告の手続きは出しません/.test(t) && /所得が書いていない場面は、総所得金額等が200万円以上/.test(t) && /税の相談の代わりではありません/.test(t) && /国税庁/.test(t);
   check("言い方：遊び方・「このゲームについて」・README のどれにも、扱わないもの（出産・眼鏡など）・所得が書いていない場面は200万円以上・税の相談の代わりではない・国税庁で確かめる、がある", dis(howto) && dis(ab) && dis(readme)); }
 check("写し元（源泉徴収いくら？）の言葉が残っていない（game-dev.md A 手順5）", !/源泉|原稿料|講演料|弁護士|税理士|10\.21|20\.42|102,100|懸賞|No\.279|gsn|GSN|gensen-ikura|しなくてよい/.test(html + gen + readme));
 check("画面にお笑いの言葉を入れない（本物っぽく）", !/お笑い|ギャグ|ツッコミ|なんでやねん|（うそ）/.test(html + gen));
