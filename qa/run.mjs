@@ -42,7 +42,8 @@ const qgrp = (items, S, self) => {
 };
 // 場面の言い方と中身が合っているか（名前が全部出る・補てん・所得・セルフメディケーションの言葉）
 const man = (n) => (n !== 0 && n % 10000 === 0 ? `${(n / 10000).toLocaleString("ja-JP")}万円` : n.toLocaleString("ja-JP") + "円");
-const SAYS = (P) => P.items.every((it) => P.q.includes(it.name.replace("家族への付添料", "付添料").replace("翌年に払った治療費", "翌年1月に払った").replace("疲れをとるマッサージ代", "マッサージ代").replace("妻の治療費", "妻の治療費").replace("通院の治療費", "通院の治療費")) && P.q.includes(man(it.amt)))
+const SAYW = { 家族への付添料: "付添料", 翌年に払った治療費: "翌年1月に払った", 疲れをとるマッサージ代: "マッサージ代" }; // 場面では言い方が少しちがう名前
+const SAYS = (P) => P.items.every((it) => P.q.includes(SAYW[it.name] || it.name) && P.q.includes(man(it.amt)))
   && /給付金|保険金|高額療養費/.test(P.q) === P.hoten > 0 && (!P.hoten || P.q.includes(man(P.hoten)))
   && /総所得金額等が/.test(P.q) === (P.S != null) && (P.S == null || P.q.includes(man(P.S)))
   && /セルフメディケーション/.test(P.q) === P.self;
